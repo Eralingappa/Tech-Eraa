@@ -15,14 +15,15 @@ export default class CourseItemDetails extends Component {
     const {params} = match
     const {id} = params
     console.log(id)
-    const response = await fetch('/https://apis.ccbp.in/te/courses/${id}')
+    const response = await fetch(`https://apis.ccbp.in/te/courses/${id}`)
 
     const data = await response.json()
     if (response.ok) {
       const updateData = {
         description = data.course_details.description,
-        id: data.course_details.name,
-        imageUrl: data.course_details.imageUrl.image_url,
+        id: data.course_details.id,
+        name:data.course_details.name,
+        imageUrl: data.course_details.image_url,
       }
       console.log(data)
       console.log(updateData)
@@ -59,20 +60,19 @@ export default class CourseItemDetails extends Component {
           )}
 
           {isSuccess && (
+            <div className="itemDetails">
             <div>
-              <div>
-                <img
-                  src="https://assets.ccbp.in/frontend/react-js/tech-era/failure-img.png"
-                  alt="failure view"
-                />
-              </div>
-              <h1>Opis Something Went Worng</h1>
-              <p>We cannot seem to find the page you are looking for</p>
-              <div>
-                <button type="button" onClick={thos.fetchCourseDetails}>
-                  Retry
-                </button>
-              </div>
+            <img src={imageUrl} alt={name} />
+            </div>
+            
+            </div>
+          )}
+          {isFailed && (
+            <div>
+            <div>
+            <img  src="https://assets.ccbp.in/frontend/react-js/tech-era/failure-img.png" alt="failure view"/>
+            </div>
+            <button type="button" onClick={this.fetchCourseDetails}>Retry</button>
             </div>
           )}
         </div>
@@ -80,4 +80,4 @@ export default class CourseItemDetails extends Component {
     )
   }
 }
-export default CourseItemDetails
+  

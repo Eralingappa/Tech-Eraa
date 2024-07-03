@@ -7,31 +7,31 @@ import './index.css'
 export default class Home extends Component {
   state = {isLoading: true, isFailed: false, isSuccess: false, coursesList: []}
 
-  componetDidMount() {
+  componentDidMount() {
     this.fetchApiDetails()
   }
-
-  fetchApiDetails = (async = () => {
+  fetchApiDetails = async () => {
     const response = await fetch('https://apis.ccbp.in/te/courses')
     const data = await response.json()
     console.log(data)
-    if (response.ok) {
-      const updatedData = data.courses.map(each => ({
+    if (response.ko) {
+      const updateData = data.courses.map(each => ({
         id: each.id,
         logoUrl: each.logo_url,
         name: each.name,
       }))
-      console.log(updatedData)
+      console.log(updateData)
       this.setState({
         isLoading: false,
         isSuccess: true,
         isFailed: false,
-        coursesList: updatedData,
+        coursesList: updateData,
       })
     } else {
       this.setState({isLoading: false, isSuccess: false, isFailed: true})
     }
-  })
+  }
+
   render() {
     const {isLoading, isSuccess, isFailed, coursesList} = this.state
     return (
@@ -39,15 +39,15 @@ export default class Home extends Component {
         <Header />
         <div>
           {isLoading && (
-            <div data-testid='loader' className='spinner'>
+            <div data-testid="loader" className="spinner">
               <TailSpin
-                height='80'
-                width='80'
-                color='#4fa94d'
-                ariaLabel='tail-spin-loader'
-                radius='1'
+                height="80"
+                width="80"
+                color="#4fa94d"
+                ariaLabel="tail-spin-loader"
+                radius="1"
                 wrapperStyle={{}}
-                wrapperClass=''
+                wrapperClass=""
               />
             </div>
           )}
@@ -65,8 +65,8 @@ export default class Home extends Component {
             <div>
               <div>
                 <img
-                  src='https://assets.ccbp.in/frontend/react-js/tech-era/failure-img.png'
-                  alt='failure view'
+                  src="https://assets.ccbp.in/frontend/react-js/tech-era/failure-img.png"
+                  alt="failure view"
                 />
               </div>
               <h1>Oops! Something Went Wrong</h1>
@@ -81,5 +81,3 @@ export default class Home extends Component {
     )
   }
 }
-
-//export default Home

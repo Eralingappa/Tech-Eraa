@@ -18,4 +18,3 @@ export default class Course extends Component {
     )
   }
 }
-export default Course
